@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+html, body, #app {
+  height: 100%;
+  margin: 0;
+}
+
+/* Markdown prose styles */
+.markdown-body {
+  line-height: 1.7;
+  font-size: 16px;
+  color: #1f2937;
+}
+.markdown-body h1 { font-size: 2em; font-weight: 700; margin: 1.5rem 0 1rem; padding-bottom: 0.3em; border-bottom: 1px solid #e5e7eb; }
+.markdown-body h2 { font-size: 1.5em; font-weight: 600; margin: 1.25rem 0 0.75rem; padding-bottom: 0.3em; border-bottom: 1px solid #e5e7eb; }
+.markdown-body h3 { font-size: 1.25em; font-weight: 600; margin: 1rem 0 0.5rem; }
+.markdown-body h4 { font-size: 1em; font-weight: 600; margin: 1rem 0 0.5rem; }
+.markdown-body h5 { font-size: 0.875em; font-weight: 600; margin: 1rem 0 0.5rem; }
+.markdown-body h6 { font-size: 0.85em; font-weight: 600; margin: 1rem 0 0.5rem; color: #6b7280; }
+.markdown-body p { margin: 0 0 1rem; }
+.markdown-body a { color: #2563eb; text-decoration: none; }
+.markdown-body a:hover { text-decoration: underline; }
+.markdown-body a.broken-link { color: #ef4444; text-decoration: underline dashed; }
+.markdown-body ul, .markdown-body ol { margin: 0 0 1rem; padding-left: 2em; }
+.markdown-body li { margin: 0.25rem 0; }
+.markdown-body li input[type="checkbox"] { margin-right: 0.5em; }
+.markdown-body blockquote { margin: 0 0 1rem; padding: 0.5rem 1rem; border-left: 4px solid #e5e7eb; color: #6b7280; }
+.markdown-body code { font-family: ui-monospace, Consolas, monospace; font-size: 0.875em; background: #f3f4f6; padding: 0.2em 0.4em; border-radius: 4px; }
+.markdown-body pre { margin: 0 0 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; overflow-x: auto; }
+.markdown-body pre code { background: none; padding: 0; font-size: 0.875em; }
+.markdown-body table { border-collapse: collapse; margin: 0 0 1rem; width: 100%; }
+.markdown-body th, .markdown-body td { border: 1px solid #e5e7eb; padding: 0.5rem 0.75rem; text-align: left; }
+.markdown-body th { background: #f9fafb; font-weight: 600; }
+.markdown-body hr { border: none; border-top: 1px solid #e5e7eb; margin: 2rem 0; }
+.markdown-body img { max-width: 100%; border-radius: 4px; }
+.markdown-body del { color: #9ca3af; }
+
+/* Shiki code blocks inherit their own colors */
+.markdown-body pre:has(.shiki) { background: none; padding: 0; }
+.markdown-body .shiki { padding: 1rem; border-radius: 8px; overflow-x: auto; }
+
+/* Scrollbar styling for tree */
+.thin-scrollbar::-webkit-scrollbar { width: 6px; }
+.thin-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.thin-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+.thin-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
