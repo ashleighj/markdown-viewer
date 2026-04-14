@@ -1,6 +1,9 @@
 import { ref, watch, type Ref } from 'vue'
 import MarkdownIt from 'markdown-it'
 import { createHighlighter, type Highlighter } from 'shiki'
+import mermaid from 'mermaid'
+
+mermaid.initialize({ startOnLoad: false, theme: 'default' })
 
 const md = new MarkdownIt({
   html: true,
@@ -59,7 +62,9 @@ export function useMarkdown(
   const html = ref('')
   const previousUrls = ref<string[]>([])
 
-  function render() {
+  let mermaidId = 0
+
+  async function render() {
     // Revoke previous blob URLs
     for (const url of previousUrls.value) {
       URL.revokeObjectURL(url)
@@ -76,9 +81,37 @@ export function useMarkdown(
       return `<${tag} id="${id}"${attrs}>${content}</${tag}>`
     })
 
+    rendered = await renderMermaidBlocks(rendered)
+
     html.value = rendered
     highlightCodeBlocks()
     resolveImages()
+  }
+
+  async function renderMermaidBlocks(input: string): Promise<string> {
+    const mermaidRegex = /<pre><code class="language-mermaid">([\s\S]*?)<\/code><\/pre>/g
+    let match
+    const replacements: [string, string][] = []
+
+    while ((match = mermaidRegex.exec(input)) !== null) {
+      const code = match[1]
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&')
+        .replace(/&quot;/g, '"')
+      try {
+        const { svg } = await mermaid.render(`mermaid-${mermaidId++}`, code.trim())
+        replacements.push([match[0], `<div class="mermaid-diagram">${svg}</div>`])
+      } catch {
+        // If mermaid can't parse it, leave as a code block
+      }
+    }
+
+    let result = input
+    for (const [original, replacement] of replacements) {
+      result = result.replace(original, replacement)
+    }
+    return result
   }
 
   async function highlightCodeBlocks() {

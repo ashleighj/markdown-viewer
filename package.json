@@ -11,6 +11,7 @@
   "dependencies": {
     "idb-keyval": "^6.2.2",
     "markdown-it": "^14.1.1",
+    "mermaid": "^11.14.0",
     "picomatch": "^4.0.4",
     "pinia": "^3.0.4",
     "shiki": "^4.0.2",

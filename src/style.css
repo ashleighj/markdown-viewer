@@ -35,6 +35,10 @@ html, body, #app {
 .markdown-body img { max-width: 100%; border-radius: 4px; }
 .markdown-body del { color: #9ca3af; }
 
+/* Mermaid diagrams */
+.markdown-body .mermaid-diagram { margin: 0 0 1rem; text-align: center; overflow-x: auto; }
+.markdown-body .mermaid-diagram svg { max-width: 100%; height: auto; }
+
 /* Shiki code blocks inherit their own colors */
 .markdown-body pre:has(.shiki) { background: none; padding: 0; }
 .markdown-body .shiki { padding: 1rem; border-radius: 8px; overflow-x: auto; }
