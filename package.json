@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@marp-team/marp-core": "^4.3.0",
     "idb-keyval": "^6.2.2",
     "markdown-it": "^14.1.1",
     "mermaid": "^11.14.0",

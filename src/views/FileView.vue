@@ -6,6 +6,7 @@ import { useViewerStore } from '../stores/viewerStore'
 import BreadcrumbBar from '../components/BreadcrumbBar.vue'
 import MarkdownRenderer from '../components/MarkdownRenderer.vue'
 import TocPanel from '../components/TocPanel.vue'
+import { isMarpDocument } from '../composables/marpDetect'
 
 const route = useRoute()
 const fileTreeStore = useFileTreeStore()
@@ -20,6 +21,7 @@ const filePath = computed(() => {
 })
 
 const contentRef = computed(() => markdownRenderer.value?.contentEl ?? null)
+const isMarp = computed(() => isMarpDocument(viewerStore.content))
 
 watch(
   [workspaceId, filePath],
@@ -53,7 +55,10 @@ async function forceOpen() {
     <div class="flex-1 flex flex-col overflow-hidden">
       <BreadcrumbBar />
 
-      <div class="flex-1 overflow-y-auto p-6">
+      <div
+        class="flex-1"
+        :class="isMarp ? 'overflow-hidden p-4' : 'overflow-y-auto p-6'"
+      >
         <!-- Loading -->
         <div v-if="viewerStore.loading" class="flex items-center justify-center h-full">
           <div class="text-gray-400 animate-pulse">Loading...</div>

@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { useViewerStore } from '../stores/viewerStore'
 import { useWorkspaceStore } from '../stores/workspaceStore'
 import { useMarkdown } from '../composables/useMarkdown'
 import { useFileSystem } from '../composables/useFileSystem'
+import { isMarpDocument } from '../composables/marpDetect'
+
+const SlidesRenderer = defineAsyncComponent(() => import('./SlidesRenderer.vue'))
 
 const router = useRouter()
 const viewerStore = useViewerStore()
@@ -16,6 +19,8 @@ const workspace = computed(() => {
   const id = viewerStore.activeWorkspaceId
   return id ? workspaceStore.workspaces.find(w => w.id === id) : null
 })
+
+const isMarp = computed(() => isMarpDocument(viewerStore.content))
 
 const { html } = useMarkdown(
   computed(() => viewerStore.content),
@@ -62,7 +67,9 @@ defineExpose({ contentEl })
 </script>
 
 <template>
+  <SlidesRenderer v-if="isMarp" />
   <div
+    v-else
     ref="contentEl"
     class="markdown-body max-w-prose mx-auto"
     v-html="html"
